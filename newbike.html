@@ -30,7 +30,7 @@
             var url =
             'https://docs.google.com/spreadsheets/d/1qnzOdxHXmUewl3OqQUpOp_U_KySQuF-WAeldjGFPrpI/gviz/tq?sheet=工作表1';
             var query = new google.visualization.Query(url);
-            query.setQuery('select *');
+            query.setQuery('select * where factory=yamaha');
             query.send(processSheetsData);
             } 
  
