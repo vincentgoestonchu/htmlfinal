@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- 利用Google Visualization讀取Google Sheet https://www.labnol.org/code/google-sheet-d3js-visualization-200608 -->
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!-- 利用Google Visualization讀取Google Sheet https://www.labnol.org/code/google-sheet-d3js-visualization-200608 -->
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    
+    <script>
+        // https://developers.google.com/chart/interactive/docs/quick_start
+        // Load the Visualization API and the corechart package.
+        google.charts.load('current', {'packages':['corechart']});
+
+        // Set a callback to run when the Google Visualization API is loaded.	
+        google.charts.setOnLoadCallback(init);
+
+        // 取得網址裡的參數 
+        function GetUrlVar(VarName) 
+        {
+            name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+            var regexS = "[\\?&]" + VarName + "=([^&#]*)";
+            var regex = new RegExp(regexS);
+            var results = regex.exec(window.location.href);
+            if (results == null)
+                    return "";
+            else
+                return results[1];
+        }
+
+            
+            // 要先取得網址裡的路徑起點終點經緯度參數 
+        var n = decodeURIComponent(GetUrlVar('id'));
+        var queryStr = "select * where A=" + n;
+
+        function init() {
+            // 這個例子使用的試算表是 https://docs.google.com/spreadsheets/d/1QScI5d56Kh-LGywY4WR6EvRGPcalFQYUAdqMxbFVDvk/copy
+            // 將上述試算表另存副本後，你要在自己的雲端硬碟將該試算表設定成[知道連結的使用者都能查看]。
+            // 然後讓程式讀取 https://docs.google.com/spreadsheets/d/瀏覽器網址列上的網址擷取序號部分/gviz/tq?sheet=工作表名稱
+            // 也就是將下列的 1QScI5d56Kh-LGywY4WR6EvRGPcalFQYUAdqMxbFVDvk 更換成自己的檔案序號，以及最後部分指讀取哪個工作表。
+            var url =
+                'https://docs.google.com/spreadsheets/d/1rHiyPciWAauYCiiKHCkJtBuL7M7dDK-5yDc9RPvYBQw/gviz/tq?sheet=bike';
+            var query = new google.visualization.Query(url);
+            query.setQuery(queryStr);
+            query.send(processSheetsData);
+        }	
+
+        function processSheetsData(response) {
+            var data = response.getDataTable();
+            var columns = data.getNumberOfColumns();
+            var rows = data.getNumberOfRows();
+
+            var str = "";
+            for (var r=0 ; r<rows ; r++) {
+                a = data.getFormattedValue(r,0);
+                b = data.getFormattedValue(r,1);
+                c = data.getFormattedValue(r,2);
+                d = data.getFormattedValue(r,3);
+                e = data.getFormattedValue(r,4);
+                f = data.getFormattedValue(r,5);
+                str += 
+                        `<div>
+
+                            <div class="card">
+
+                                <div class="card-image waves-effect waves-block waves-light">
+
+                                    <img class="activator" src="${d}">
+
+                                </div>
+
+                                <div class="card-content">
+
+                                    <span class="card-title activator grey-text text-darken-4"> ${c} <i class="material-icons right">more_vert</i></span>
+
+                                </div>
+
+                                <div class="card-reveal">
+
+                                    <span class="card-title grey-text text-darken-4">${c}<i class="material-icons right">close</i></span>
+
+                                    <p>
+                                        Bike year: ${e} <br>
+                                        Used: ${f} km                                            
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        </div>`
+            };
+            document.getElementById("demo").innerHTML = str;
+        }
+
+        function formresponse() {
+            var name = document.forms["form1"]["name"].value;
+            var p = document.forms["form1"]["phone"].value;
+            var id = decodeURIComponent(GetUrlVar('id'));
+            if (name==null || name=="")
+            {
+                alert("Name can't be empty!");
+                return false;
+            }
+            else if (p==null || p=="")
+            {
+                alert("Phone number can't be empty!");
+                return false;
+            }
+            else
+            {
+                var MySubmit = "https://docs.google.com/forms/d/e/1FAIpQLSclvjH5VFNXZ3zWNZRdZ1C9iX8ADH39MrV5aXFrn-u8wYPRhg/formResponse?entry.467067987=" + name + "&entry.1878876883=" + p + "&entry.805675782=" + id + "&submit=Submit";
+                // https://docs.google.com/forms/d/e/1FAIpQLSclvjH5VFNXZ3zWNZRdZ1C9iX8ADH39MrV5aXFrn-u8wYPRhg/viewform?usp=pp_url&entry.467067987=james&entry.1878876883=0123&entry.805675782=1
+                var NewOpen = window.open(MySubmit);
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <nav>
+        <div class="nav-wrapper grey darken-4">
+          <a href="#" class="brand-logo">TAICHUNG 二手 MOTORBIKE</a>
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="bike.html">Bike collection</a></li>
+            <li><a href="cart.html">Shopping cart</a></li>
+          </ul>
+        </div>
+    </nav>
+    <br>
+    <div class="row">
+        
+        
+        <div class="col s6">
+            <form class="col s12" name="form1">
+                <div class="row">
+                  <div class="input-field col s6">
+                    <input id="name" type="text" class="validate" name="name">
+                    <label for="name">Name</label>
+                  </div>
+                  <div class="input-field col s6">
+                    <input id="phone" type="text" class="validate" name="phone">
+                    <label for="phone">Phone number</label>
+                  </div>
+                </div>
+              </form>
+              <a class="waves-effect waves-light btn" href="javascript:formresponse();">submit</a>
+        </div>
+        
+        
+        <div class="col s6">
+            <h4>You wish to order this bike:</h4>
+            <div id="demo"></div>
+        </div>
+    </div>
+
+    <br>
+    <footer class="page-footer grey darken-2">
+        <div class="container">
+            <div class="row">
+                <div class="col l6">
+                    <h5 class="white-text">Click to find out more about us!</h5>
+                    <ul>
+                        <li><a class="grey-text text-lighten-3" href="aboutus.html">Our company profile</a></li>
+                        <li><a class="grey-text text-lighten-3" href="#!">Follow our Instagram</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+                © 2022 Copyright
+            </div>
+        </div>
+    </footer>
+    <!--JavaScript at end of body for optimized loading-->
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+ 
+
+</body>
+</html>
