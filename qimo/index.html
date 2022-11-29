@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- 利用Google Visualization讀取Google Sheet https://www.labnol.org/code/google-sheet-d3js-visualization-200608 -->
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <script>
+        var i = 0; //to show we are now currently on page number i
+        
+        var abc = ["https://scontent-tpe1-1.xx.fbcdn.net/v/t39.30808-6/316266027_1767405016975456_2024420994132394127_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=0debeb&_nc_ohc=jQYivkhF5HkAX_QuCOP&_nc_ht=scontent-tpe1-1.xx&oh=00_AfDSqQoGHkcaKVDp-NEzynlMbgpq36Jl_gXxNM9LyNwZsg&oe=6388B6FA",
+                   "https://scontent.frmq2-2.fna.fbcdn.net/v/t39.30808-6/316311691_1767406220308669_8606622332319754953_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=0debeb&_nc_ohc=i0nQhPgQWAIAX9wHZel&_nc_ht=scontent.frmq2-2.fna&oh=00_AfAu3-Dulg3FeMvWDbQT6BGHHi4muBmroaXNuKTnh1zBsQ&oe=638A636B",
+                   "https://scontent-tpe1-1.xx.fbcdn.net/v/t39.30808-6/316251939_1767407103641914_1442041519030654536_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=0debeb&_nc_ohc=QQempdgldt8AX-3_9fk&_nc_ht=scontent-tpe1-1.xx&oh=00_AfDY3JDYaINxEIQdxf88ZSAMhQRo67Gcj1LJp1x7f6Bu5Q&oe=63893DFA",
+                   "https://scontent.frmq2-1.fna.fbcdn.net/v/t39.30808-6/316211788_1767406726975285_2126003299903120_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=0debeb&_nc_ohc=zX-jK_2_lagAX8Q4zBb&tn=j2wnRkfkKyqOFggI&_nc_ht=scontent.frmq2-1.fna&oh=00_AfAknBEJABxqfTLR5gyueXMp7rlTDmc7-iBUMZwIuw0qlA&oe=6389EF79",
+                   "https://scontent.frmq2-2.fna.fbcdn.net/v/t39.30808-6/316687748_1767405970308694_975508065416344325_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=0debeb&_nc_ohc=2PyJ4_HL9hgAX99v1qP&tn=j2wnRkfkKyqOFggI&_nc_ht=scontent.frmq2-2.fna&oh=00_AfD--Gd3k-EpCd7ROWU074adb4nngZit2yqFOm0biovgsA&oe=638A6B83"];
+        
+        function f1(z)
+        {
+            if(i==0 && z==-1){ //spy gbs diback wkt udh mentok atas soalny di awal dia i==0 dan kalo i lagi 0 gaboleh di back, soalny tombol back itu artinya z==-1, ini gabakal ke-execute apa2 soalny isi if{} kosong
+            }
+            else if(i==abc.length-1 && z==1){ //spy gbs dinext wkt udh mentok bawah soalny wkt mentok bawah dia i==array.length dan klo lgi di photo trkhr gbs di next soalny tombol next artinya z==1, gabakal ke-execute apa2 soalny isi if{} kosong
+            } //array.length di -1 soalny spy sesuai sm cara ngitung array yg dimulai dri 0
+            else{
+            i = i+z
+            document.getElementById("x").innerHTML = '<img src="' + abc[i] + '"  width="100%">' 
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <nav>
+        <div class="nav-wrapper grey darken-4">
+          <a href="#" class="brand-logo">TAICHUNG 二手 MOTORBIKE</a>
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="bike.html">Bike collection</a></li>
+            <li><a href="review.html">Customer review</a></li>
+          </ul>
+        </div>
+    </nav>
+
+    <br>
+    <br>
+
+    <div class="row">
+        <div class="col s5 push-s7"><span class="flow-text">Favorite Bike of All Times</span></div>
+        <div class="col s7 pull-s5" id="x">
+            <img src="https://scontent.frmq2-2.fna.fbcdn.net/v/t39.30808-6/316242086_1767404563642168_3108901769151771260_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=0debeb&_nc_ohc=q3HPpHeAARoAX8St_Nj&_nc_ht=scontent.frmq2-2.fna&oh=00_AfByzD4wR4mqId_JC6wm2NA3QLGsjHFDBfq0aYiMDNRIYg&oe=6389066A" width="100%">
+        </div>
+        <a href="javascript:f1(-1);">上一張</a>
+        <a href="javascript:f1(1);">下一張</a>        
+    </div>
+
+    <br>
+    <br>
+    
+    <footer class="page-footer grey darken-2">
+        <div class="container">
+            <div class="row">
+                <div class="col l6">
+                    <h5 class="white-text">Click to find out more about us!</h5>
+                    <ul>
+                        <li><a class="grey-text text-lighten-3" href="aboutus.html">Our company profile</a></li>
+                        <li><a class="grey-text text-lighten-3" href="#!">Follow our Instagram</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+                © 2022 Copyright
+            </div>
+        </div>
+    </footer>
+    <!--JavaScript at end of body for optimized loading-->
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+ 
+
+</body>
+</html>
