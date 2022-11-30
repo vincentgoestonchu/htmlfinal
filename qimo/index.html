@@ -74,6 +74,14 @@
             <span class="flow-text black-text" style="font-family: 'Libre Baskerville', serif;">Favorite Bike of All Times</span>
             <p>by</p>
             <img src="logo.png" width="35%">
+            <div class="row">
+                <p>Check out our store location on Goggle Maps:</p>
+                <div id="demo1"></div>
+            </div>
+            <div class="row">
+                <p>How to get to our store from NCHU?</p>
+                <div id="demo2"></div>
+            </div>
         </div>
         </div>
         <div class="col s6" id="x">
@@ -106,8 +114,16 @@
             </div>
         </div>
     </footer>
-    <!--JavaScript at end of body for optimized loading-->
-    <script type="text/javascript" src="js/materialize.min.js"></script>
+
+
+    <script>
+        var a = "24.150969864567443, 120.67330461065842";
+        var b = "16";
+        var str1 = '<a class="waves-effect waves-light teal darken-3 btn" target="_blank" href="http://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&q=' + a + '&z=' + b + '"><i class="material-icons">location_on</i></a>';
+        var str2 = '<a class="waves-effect waves-light teal darken-3 btn" target="_blank" href="http://maps.google.com.tw/maps?saddr=24.123538201082667, 120.67530227223278&daddr=' + a + '"><i class="material-icons">directions_car</i></a>';
+        document.getElementById("demo1").innerHTML = str1;
+        document.getElementById("demo2").innerHTML = str2;
+    </script>
  
 
 </body>
